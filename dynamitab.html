@@ -83,6 +83,9 @@ class TabView {
     this.tabs = Array();
     this.expand_tabs = expand_tabs;
     this.default_tab = default_tab;
+    
+    this.tablist_id = id + "-tablist";
+    this.tablist_class = this.class_prefix + "-tablist";
   }
   
   get id() {
@@ -95,6 +98,21 @@ class TabView {
         this.tabs[i].tabview_id = value;
       }
     }
+  }
+   
+  get tablist() {
+    var tablist = document.createElement("ul");
+    tablist.setAttribute("role", "tablist");
+   tablist.setAttribute("id", this.tablist_id);
+    tablist.setAttribute("class", this.tablist_class);
+    for(var i = 0; i < this.tabs.length; i++) {
+      var child = this.tabs[i].tab_element;
+      if(this.expand_tabs) {
+        child.style.width = "calc(100% / " + this.tabs.length + ")";
+      }
+      tablist.appendChild(child);
+    }
+    return tablist
   }
 }
 </script>
