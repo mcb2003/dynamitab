@@ -51,6 +51,7 @@ class Tab {
     panel_hidden = panel_hidden.toString();
     panelobj.setAttribute("aria-hidden", panel_hidden);
     panelobj.setAttribute("aria-labelledby", this.tab_id);
+    panelobj.setAttribute("role", "tabpanel");
     var panelheading = document.createElement("h" + this.panel_heading_level);
     panelheading.textContent = this.title;
     panelobj.appendChild(panelheading);
