@@ -114,5 +114,15 @@ class TabView {
     }
     return tablist
   }
+  
+  get tabview() {
+    var tabview = document.createElement("section");
+    tabview.setAttribute("id", this.id);
+    tabview.appendChild(this.tablist);
+    for(var i = 0; i < this.tabs.length; i++) {
+      tabview.appendChild(this.tabs[i].panel_element);
+    }
+    return tabview;
+  }
 }
 </script>
