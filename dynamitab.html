@@ -1,4 +1,4 @@
-<script
+
 src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
 // this is the dynamitab.js class file..
@@ -28,7 +28,7 @@ class Tab {
     this.panel_id = this.tabview_id + "-panel" + value;
   }
   
-  get tab_html() {
+  get tab_element() {
     var tabobj = document.createElement("li");
     tabobj.setAttribute("role", "tab");
     tabobj.setAttribute("id", this.tab_id);
