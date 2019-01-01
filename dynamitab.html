@@ -58,4 +58,32 @@ class Tab {
     return panelobj;
   }
 }
+
+// this is the class definition for TabView objects (the main object used when constructing a TabView).
+class TabView {
+  constructor(id, class_prefix=undefined, default_tab=1, expand_tabs=true, panel_heading_level=2) {
+    this._id = id;
+    if(class_prefix === undefined) {
+      this.class_prefix = id;
+    } else {
+      this.class_prefix = class_prefix;
+    }
+    this.panel_heading_level = panel_heading_level;
+    this.tabs = Array();
+    this.expand_tabs = expand_tabs;
+    this.default_tab = default_tab;
+  }
+  
+  get id() {
+    return this._id;
+  }
+  set id(value) {
+    this._id = value;
+    if(this.tabs.length != 0) {
+      for(var i = 0; i < this.tabs.length; i++) {
+        this.tabs[i].tabview_id = value;
+      }
+    }
+  }
+}
 </script>
