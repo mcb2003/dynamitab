@@ -1,0 +1,29 @@
+<script
+src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+// this is the dynamitab.js class file..
+
+// this is a class definition for a Tab. Tabs can be added to TabView objects.
+class Tab {
+  constructor(tabview, id, title, description=undefined) {
+    this._id = id;
+    this.title = title;
+    this.description = description;
+    
+    this.tabview = tabview;
+    this.tab_id = tabview.id + "-tab" + id;
+    this.tab_class = tabview.class_prefix + "-tab";
+    this.panel_id = tabview.id + "-panel" + id;
+    this.panel_class = tabview.class_prefix + "-panel";
+  }
+  
+  get id() {
+    return this._id;
+  }
+  set id(value) {
+    this._id = value;
+    this.tab_id = this.tabview.id + "-tab" + value;
+    this.panel_id = this.tabview.id + "-panel" + value;
+  }
+}
+</script>
