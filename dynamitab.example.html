@@ -1,0 +1,24 @@
+<!doctype html>
+<html><head>
+<title>Dynamitab Example File</title>
+<link rel="stylesheet" type="text/css" href="dynamitab.css">
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel" src="dynamitab.js"></script>
+<script type="text/babel">
+  // create a TabView object.
+var tv = new TabView("tv");
+// create some tabs.
+var tab1 = new Tab(tv, 1, "Windows", true, "Articles about Microsoft's Windows operating system.");
+var tab2 = new Tab(tv, 2, "macOS", false, "Articles about Apple's macOS operating system.");
+var tab3 = new Tab(tv, 3, "Linux", false, "Articles about the free and open source Linux operating system.");
+// add them to the TabView.
+tv.tabs.push(tab1);
+tv.tabs.push(tab2);
+tv.tabs.push(tab3);
+// add the TabView to the body.
+var body = document.querySelector("body");
+body.appendChild(tv.tabview);
+</script>
+</head><body>
+
+</body>

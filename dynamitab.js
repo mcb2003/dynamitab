@@ -1,5 +1,3 @@
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script type="text/babel">
 // this is the dynamitab.js class file..
 
 // this is a class definition for a Tab. Tabs can be added to TabView objects.
@@ -13,6 +11,7 @@ class Tab {
     this.class_prefix = tabview.class_prefix;
     this._tabview_id = tabview.id;
     this.panel_heading_level = tabview.panel_heading_level;
+    this.panel_heading_class = tabview.panel_heading_class;
     this.tab_id = tabview.id + "-tab" + id;
     this.tab_class = tabview.class_prefix + "-tab";
     this.panel_id = tabview.id + "-panel" + id;
@@ -64,6 +63,7 @@ class Tab {
     panelobj.setAttribute("aria-labelledby", this.tab_id);
     panelobj.setAttribute("role", "tabpanel");
     var panelheading = document.createElement("h" + this.panel_heading_level);
+    panelheading.setAttribute("class", this.panel_heading_class);
     panelheading.textContent = this.title;
     panelobj.appendChild(panelheading);
     return panelobj;
@@ -72,7 +72,7 @@ class Tab {
 
 // this is the class definition for TabView objects (the main object used when constructing a TabView).
 class TabView {
-  constructor(id, class_prefix=undefined, default_tab=1, expand_tabs=true, panel_heading_level=2) {
+  constructor(id, class_prefix=undefined, default_tab=1, expand_tabs=true, panel_heading_level=2, panel_heading_class=undefined) {
     this._id = id;
     if(class_prefix === undefined) {
       this.class_prefix = id;
@@ -80,6 +80,11 @@ class TabView {
       this.class_prefix = class_prefix;
     }
     this.panel_heading_level = panel_heading_level;
+    if(panel_heading_class === undefined) {
+      this.panel_heading_class = this.class_prefix + "-panelheading";
+    } else {
+      this.panel_heading_class = panel_heading_class;
+    }
     this.tabs = Array();
     this.expand_tabs = expand_tabs;
     this.default_tab = default_tab;
@@ -108,7 +113,7 @@ class TabView {
     for(var i = 0; i < this.tabs.length; i++) {
       var child = this.tabs[i].tab_element;
       if(this.expand_tabs) {
-        child.style.width = "calc(100% / " + this.tabs.length + ")";
+        child.style.width = "calc(98% / " + this.tabs.length + ")";
       }
       tablist.appendChild(child);
     }
@@ -125,4 +130,3 @@ class TabView {
     return tabview;
   }
 }
-</script>
