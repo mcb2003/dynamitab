@@ -2,10 +2,10 @@
 
 // this is a class definition for a Tab. Tabs can be added to TabView objects.
 class Tab {
-  constructor(tabview, id, title, selected=false, description=undefined) {
+  constructor(tabview, id, title, description=undefined) {
     this._id = id;
     this.title = title;
-    this.selected = selected;
+    this.selected = false;
     this.description = description;
     
     this.class_prefix = tabview.class_prefix;
@@ -111,6 +111,11 @@ class TabView {
    tablist.setAttribute("id", this.tablist_id);
     tablist.setAttribute("class", this.tablist_class);
     for(var i = 0; i < this.tabs.length; i++) {
+      if(this.tabs[i].id === this.default_tab) {
+        this.tabs[i].selected = true;
+      } else {
+        this.tabs[i].selected = false;
+      }
       var child = this.tabs[i].tab_element;
       if(this.expand_tabs) {
         child.style.width = "calc(98% / " + this.tabs.length + ")";
