@@ -36,13 +36,14 @@ class Tab {
     this.tab_class = value + "-tab";
     this.panel_id = value + "-panel" + this.id;
     this.panel_class = value + "-panel";
-  }
+  } 
   
   get tab_element() {
     var tabobj = document.createElement("li");
     tabobj.setAttribute("role", "tab");
     tabobj.setAttribute("id", this.tab_id);
     tabobj.setAttribute("class", this.tab_class);
+    tabobj.setAttribute("data-tabid", this.id);
     tabobj.setAttribute("tabindex", "0");
     tabobj.setAttribute("aria-selected", this.selected.toString());
     tabobj.setAttribute("aria-controls", this.panel_id);
@@ -68,6 +69,37 @@ class Tab {
     panelobj.appendChild(panelheading);
     return panelobj;
   }
+  
+  select() {
+    var tab = document.querySelector("#" + this.tab_id);
+    if(tab && tab.getAttribute("aria-selected") != "true") {
+      // get all tabs.
+      var tabs = tab.parentElement.children;
+      // deselect them all.
+      for(var j = 0; j < tabs.length; j++) {
+        tabs[j].setAttribute("aria-selected", "false");
+      }
+      // select the one that's clicked.
+      tab.setAttribute("aria-selected", "true");
+      
+      // get the current tab panel.
+      var panelid =tab.getAttribute("aria-controls"); 
+      var current_panel = document.querySelector("#" + panelid);
+      // from this, get all the panels.
+      var panels = current_panel.parentElement.children;
+      // hide all panels.
+      for(var k = 0; k < panels.length; k++) {
+        panels[k].setAttribute("aria-hidden", "true");
+      }
+      // show the correct panel.
+      current_panel.setAttribute("aria-hidden", "false");
+
+      // finally, focus the newly selected tab.
+      tab.focus();
+
+    }
+  }
+
 }
 
 // this is the class definition for TabView objects (the main object used when constructing a TabView).
@@ -129,9 +161,35 @@ class TabView {
     var tabview = document.createElement("section");
     tabview.setAttribute("id", this.id);
     tabview.appendChild(this.tablist);
+    var tabpanel_container = document.createElement("div");
     for(var i = 0; i < this.tabs.length; i++) {
-      tabview.appendChild(this.tabs[i].panel_element);
+      tabpanel_container.appendChild(this.tabs[i].panel_element);
     }
+    tabview.appendChild(tabpanel_container);
     return tabview;
+  }
+  
+  getTabById(id) {
+    for(var i = 0; i < this.tabs.length; i++) {
+      if(this.tabs[i].id == id) {
+        return this.tabs[i];
+      }
+    }
+    return undefined;
+  }
+  
+  registerEvents() {
+    var tab_elements = document.querySelector("#" + this.tablist_id)
+    tab_elements = tab_elements.children;
+    var self = this;
+    for(var i = 0; i < tab_elements.length; i++) {
+      tab_elements[i].addEventListener("click", function() {
+        var id = this.getAttribute("data-tabid");
+        if(id) {
+          var tab = self.getTabById(id);
+          tab.select();
+        }
+      });
+    }
   }
 }

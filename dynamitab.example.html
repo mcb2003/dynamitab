@@ -7,7 +7,7 @@
 <script type="text/babel">
   // create a TabView object.
 var tv = new TabView("tv");
-tv.default_tab = 1;
+tv.default_tab = 2;
 // create some tabs.
 var tab1 = new Tab(tv, 1, "Windows", "Articles about Microsoft's Windows operating system.");
 var tab2 = new Tab(tv, 2, "macOS", "Articles about Apple's macOS operating system.");
@@ -19,6 +19,7 @@ tv.tabs.push(tab3);
 // add the TabView to the body.
 var body = document.querySelector("body");
 body.appendChild(tv.tabview);
+tv.registerEvents();
 </script>
 </head><body>
 
