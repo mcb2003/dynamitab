@@ -206,35 +206,46 @@ class TabView {
           this.click();
         } else if(event.which === 37) {
         event.preventDefault();
+        self.previousTab();
+        } else if(event.which === 39) {
+        event.preventDefault();
+        self.nextTab();
+        }
+      });
+    }
+  }
+  
+  
+  previousTab() {
     // get the index of the current tab.
-    var index = self.tabs.indexOf(self.currentTab);
+    var index = this.tabs.indexOf(this.currentTab);
     // check if it's 0 or the last element and create a new_index variable depending on the result.
     if(index === 0) {
-      var new_index = self.tabs.length - 1;
-    } else if(index === self.tabs.length - 1) {
+      var new_index = this.tabs.length - 1;
+    } else if(index === this.tabs.length - 1) {
       var new_index = 0;
     } else {
       var new_index = index - 1;
     }
     // select this new tab.
-    self.tabs[new_index].select();
-        } else if(event.which === 39) {
-        event.preventDefault();
+    this.tabs[new_index].select();
+
+  }
+  
+  nextTab() {
     // get the index of the current tab.
-    var index = self.tabs.indexOf(self.currentTab);
+    var index = this.tabs.indexOf(this.currentTab);
     // check if it's 0 or the last element and create a new_index variable depending on the result.
     if(index === 0) {
-      var new_index = self.tabs.length - 1;
-    } else if(index === self.tabs.length - 1) {
+      var new_index = this.tabs.length - 1;
+    } else if(index === this.tabs.length - 1) {
       var new_index = 0;
     } else {
       var new_index = index + 1;
     }
     // select this new tab.
-    self.tabs[new_index].select();
-        }
-      });
-    }
+    this.tabs[new_index].select();
+
   }
   
   get currentTab() {
