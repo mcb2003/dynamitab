@@ -5,7 +5,6 @@ class Tab {
   constructor(tabview, id, title, description=undefined) {
     this._id = id;
     this.title = title;
-    this.selected = false;
     this.description = description;
     
     this.class_prefix = tabview.class_prefix;
@@ -45,7 +44,6 @@ class Tab {
     tabobj.setAttribute("class", this.tab_class);
     tabobj.setAttribute("data-tabid", this.id);
     tabobj.setAttribute("tabindex", "0");
-    tabobj.setAttribute("aria-selected", this.selected.toString());
     tabobj.setAttribute("aria-controls", this.panel_id);
     if(this.description != undefined) {
       tabobj.setAttribute("title", this.description);
@@ -58,11 +56,9 @@ class Tab {
     var panelobj = document.createElement("section");
     panelobj.setAttribute("id", this.panel_id);
     panelobj.setAttribute("class", this.panel_class);
-    var panel_hidden = !this.selected;
-    panel_hidden = panel_hidden.toString();
-    panelobj.setAttribute("aria-hidden", panel_hidden);
     panelobj.setAttribute("aria-labelledby", this.tab_id);
     panelobj.setAttribute("role", "tabpanel");
+    panelobj.setAttribute("data-tabid", this.id);
     var panelheading = document.createElement("h" + this.panel_heading_level);
     panelheading.setAttribute("class", this.panel_heading_class);
     panelheading.textContent = this.title;
@@ -88,8 +84,8 @@ class Tab {
       // from this, get all the panels.
       var panels = current_panel.parentElement.children;
       // hide all panels.
-      for(var k = 0; k < panels.length; k++) {
-        panels[k].setAttribute("aria-hidden", "true");
+      for(var j = 0; j < panels.length; j++) {
+        panels[j].setAttribute("aria-hidden", "true");
       }
       // show the correct panel.
       current_panel.setAttribute("aria-hidden", "false");
@@ -143,12 +139,12 @@ class TabView {
    tablist.setAttribute("id", this.tablist_id);
     tablist.setAttribute("class", this.tablist_class);
     for(var i = 0; i < this.tabs.length; i++) {
-      if(this.tabs[i].id === this.default_tab) {
-        this.tabs[i].selected = true;
-      } else {
-        this.tabs[i].selected = false;
-      }
       var child = this.tabs[i].tab_element;
+      if(child.getAttribute("data-tabid") == this.default_tab) {
+        child.setAttribute("aria-selected", "true");
+      } else {
+        child.setAttribute("aria-selected", "false");
+      }
       if(this.expand_tabs) {
         child.style.width = "calc(98% / " + this.tabs.length + ")";
       }
@@ -163,7 +159,13 @@ class TabView {
     tabview.appendChild(this.tablist);
     var tabpanel_container = document.createElement("div");
     for(var i = 0; i < this.tabs.length; i++) {
-      tabpanel_container.appendChild(this.tabs[i].panel_element);
+      var panel =this.tabs[i].panel_element;
+      if(panel.getAttribute("data-tabid") == this.default_tab) {
+        panel.setAttribute("aria-hidden", "false");
+      } else {
+        panel.setAttribute("aria-hidden", "true");
+      }
+      tabpanel_container.appendChild(panel);
     }
     tabview.appendChild(tabpanel_container);
     return tabview;
