@@ -72,8 +72,8 @@ class Tab {
       // get all tabs.
       var tabs = tab.parentElement.children;
       // deselect them all.
-      for(var j = 0; j < tabs.length; j++) {
-        tabs[j].setAttribute("aria-selected", "false");
+      for(var i = 0; i < tabs.length; i++) {
+        tabs[i].setAttribute("aria-selected", "false");
       }
       // select the one that's clicked.
       tab.setAttribute("aria-selected", "true");
@@ -95,7 +95,15 @@ class Tab {
 
     }
   }
-
+  
+  get selected() {
+    var tab = document.querySelector("#" + this.tab_id);
+    if(tab && tab.getAttribute("aria-selected") == "true") {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 
 // this is the class definition for TabView objects (the main object used when constructing a TabView).
@@ -192,6 +200,49 @@ class TabView {
           tab.select();
         }
       });
+      tab_elements[i].addEventListener("keydown", function(event) {
+        if(event.which === 13) {
+          event.preventDefault();
+          this.click();
+        } else if(event.which === 37) {
+        event.preventDefault();
+    // get the index of the current tab.
+    var index = self.tabs.indexOf(self.currentTab);
+    // check if it's 0 or the last element and create a new_index variable depending on the result.
+    if(index === 0) {
+      var new_index = self.tabs.length - 1;
+    } else if(index === self.tabs.length - 1) {
+      var new_index = 0;
+    } else {
+      var new_index = index - 1;
     }
+    // select this new tab.
+    self.tabs[new_index].select();
+        } else if(event.which === 39) {
+        event.preventDefault();
+    // get the index of the current tab.
+    var index = self.tabs.indexOf(self.currentTab);
+    // check if it's 0 or the last element and create a new_index variable depending on the result.
+    if(index === 0) {
+      var new_index = self.tabs.length - 1;
+    } else if(index === self.tabs.length - 1) {
+      var new_index = 0;
+    } else {
+      var new_index = index + 1;
+    }
+    // select this new tab.
+    self.tabs[new_index].select();
+        }
+      });
+    }
+  }
+  
+  get currentTab() {
+    for(var i = 0; i < this.tabs.length; i++) {
+      if(this.tabs[i].selected === true) {
+        return this.tabs[i];
+      }
+    }
+    return undefined;
   }
 }
