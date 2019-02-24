@@ -1,0 +1,13 @@
+{
+  "name": "dynamitab",
+  "version": "0.0.1",
+  "license": "LGPL-3",
+  "scripts": {
+    "build": "babel src -d lib"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.3",
+    "@babel/preset-env": "^7.3.1"
+  }
+}
