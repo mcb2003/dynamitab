@@ -8,6 +8,7 @@ class Tab {
     this.description = description;
 
     this.class_prefix = tabview.class_prefix;
+    this.all_in_tabbing_order = tabview.all_in_tabbing_order;
     this._tabview_id = tabview.id;
     this.panel_heading_level = tabview.panel_heading_level;
     this.panel_heading_class = tabview.panel_heading_class;
@@ -43,7 +44,11 @@ class Tab {
     tabobj.setAttribute("id", this.tab_id);
     tabobj.setAttribute("class", this.tab_class);
     tabobj.setAttribute("data-tabid", this.id);
-    tabobj.setAttribute("tabindex", "0");
+    if (this.all_in_tabbing_order) {
+      tabobj.setAttribute("tabindex", "0");
+    } else {
+      tabobj.setAttribute("tabindex", "-1");
+    }
     tabobj.setAttribute("aria-controls", this.panel_id);
     if (this.description != undefined) {
       tabobj.setAttribute("title", this.description);
@@ -74,9 +79,16 @@ class Tab {
       // deselect them all.
       for (var i = 0; i < tabs.length; i++) {
         tabs[i].setAttribute("aria-selected", "false");
+        // Also get rid of the tabindex if only the focused tab should have it.
+        if (!this.all_in_tabbing_order) {
+          tabs[i].setAttribute('tabindex', '-1');
+        }
       }
       // select the one that's clicked.
       tab.setAttribute("aria-selected", "true");
+      if (!this.all_in_tabbing_order) {
+        tab.setAttribute('tabindex', '0');
+      }
 
       // get the current tab panel.
       var panelid = tab.getAttribute("aria-controls");
@@ -112,6 +124,7 @@ class TabView {
     class_prefix: undefined,
     default_tab: 1,
     expand_tabs: true,
+    all_in_tabbing_order: true,
     panel_heading_level: 2,
     panel_heading_class: undefined
   }) {
@@ -129,6 +142,7 @@ class TabView {
     }
     this.tabs = Array();
     this.expand_tabs = options.expand_tabs;
+    this.all_in_tabbing_order = options.all_in_tabbing_order;
     this.default_tab = options.default_tab;
 
     this.tablist_id = id + "-tablist";
