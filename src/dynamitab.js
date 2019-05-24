@@ -98,7 +98,8 @@ class Tab {
   
   get selected() {
     var tab = document.querySelector("#" + this.tab_id);
-    if(tab && tab.getAttribute("aria-selected") == "true") {
+    if(tab && tab.getAttribute("aria-selected") == "true") 
+{
       return true;
     } else {
       return false;
@@ -219,11 +220,9 @@ class TabView {
   previousTab() {
     // get the index of the current tab.
     var index = this.tabs.indexOf(this.currentTab);
-    // check if it's 0 or the last element and create a new_index variable depending on the result.
+    // check if it's 0 and create a new_index variable depending on the result.
     if(index === 0) {
       var new_index = this.tabs.length - 1;
-    } else if(index === this.tabs.length - 1) {
-      var new_index = 0;
     } else {
       var new_index = index - 1;
     }
@@ -235,10 +234,8 @@ class TabView {
   nextTab() {
     // get the index of the current tab.
     var index = this.tabs.indexOf(this.currentTab);
-    // check if it's 0 or the last element and create a new_index variable depending on the result.
-    if(index === 0) {
-      var new_index = this.tabs.length - 1;
-    } else if(index === this.tabs.length - 1) {
+    // check if it's the last element and create a new_index variable depending on the result.
+    if(index === this.tabs.length - 1) {
       var new_index = 0;
     } else {
       var new_index = index + 1;
