@@ -10,6 +10,7 @@ class Tab {
     this.class_prefix = tabview.class_prefix;
     this.all_in_tabbing_order = tabview.all_in_tabbing_order;
     this.use_bootstrap = tabview.use_bootstrap;
+    this.bootstrap_fade = tabview.bootstrap_fade;
     this._tabview_id = tabview.id;
     this.panel_heading_level = tabview.panel_heading_level;
     this.panel_heading_class = tabview.panel_heading_class;
@@ -71,6 +72,9 @@ class Tab {
     var panelobj = document.createElement('section');
     panelobj.setAttribute('id', this.panel_id);
     panelobj.classList.add(this.panel_class);
+    if (this.use_bootstrap && this.bootstrap_fade) {
+      panelobj.classList.add('fade');
+    }
     panelobj.setAttribute('aria-labelledby', this.tab_id);
     panelobj.setAttribute('aria-hidden', !visible);
     if (!visible) {
@@ -153,7 +157,8 @@ class TabView {
       all_in_tabbing_order: true,
       panel_heading_level: 2,
       panel_heading_class: undefined,
-      use_bootstrap: false
+      use_bootstrap: false,
+      bootstrap_fade: true
     };
     // Merge the defaults with the provided options
     var options = {
