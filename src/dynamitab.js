@@ -197,13 +197,17 @@ class TabView {
     // Add the bootstrap classes if requested.
     if (this.use_bootstrap) {
       tablist.classList.add('nav', 'nav-tabs');
+      // If expand_tabs is also set, use the nav-justified class as well.
+      if (this.expand_tabs) {
+        tablist.classList.add('nav-justified');
+      }
     }
     for (var i = 0; i < this.tabs.length; i++) {
       var child = this.tabs[i].get_tab_element(this.tabs[i].id == this.default_tab);
       if (this.tabs[i].id == this.default_tab) {
         this.tabs[i].select();
       }
-      if (this.expand_tabs) {
+      if (this.expand_tabs && !this.use_bootstrap) {
         child.style.width = 'calc(98% / ' + this.tabs.length + ')';
       }
       tablist.appendChild(child);
