@@ -1,6 +1,6 @@
 {
   "name": "dynamitab",
-  "version": "1.1.1",
+  "version": "1.2",
   "license": "LGPL-3",
   "scripts": {
     "build": "babel src -d lib"
