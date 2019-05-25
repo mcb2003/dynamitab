@@ -91,7 +91,7 @@ class Tab {
     panelobj.appendChild(panelheading);
 
     // If content was provided at the tab's instanciation:
-    if (this.content != undefined && this.content instanceof Element) {
+    if (this.content != undefined && this.content instanceof HTMLElement) {
       panelobj.appendChild(this.content);
     } else if (this.content != undefined && this.content instanceof Array) {
       for (i = 0; i < this.content.length; i++) {
