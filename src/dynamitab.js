@@ -9,6 +9,7 @@ class Tab {
 
     this.class_prefix = tabview.class_prefix;
     this.all_in_tabbing_order = tabview.all_in_tabbing_order;
+    this.use_bootstrap = tabview.use_bootstrap;
     this._tabview_id = tabview.id;
     this.panel_heading_level = tabview.panel_heading_level;
     this.panel_heading_class = tabview.panel_heading_class;
@@ -38,16 +39,25 @@ class Tab {
     this.panel_class = value + '-panel';
   }
 
-  get tab_element() {
+  get_tab_element(selected = false) {
     var tabobj = document.createElement('li');
     tabobj.setAttribute('role', 'tab');
     tabobj.setAttribute('id', this.tab_id);
-    tabobj.className = this.tab_class;
+    tabobj.classList.add(this.tab_class);
+    // Add the bootstrap classes if requested.
+    if (this.use_bootstrap) {
+      tabobj.classList.add('nav-item', 'nav-link');
+    }
     tabobj.setAttribute('data-tabid', this.id);
-    if (this.all_in_tabbing_order) {
+    if (this.all_in_tabbing_order || selected) {
       tabobj.setAttribute('tabindex', '0');
     } else {
       tabobj.setAttribute('tabindex', '-1');
+    }
+    tabobj.setAttribute('aria-selected', selected.toString());
+    // Add the bootstrap active class if the tab is selected.
+    if (this.use_bootstrap && selected) {
+      tabobj.classList.add('active');
     }
     tabobj.setAttribute('aria-controls', this.panel_id);
     if (this.description != undefined) {
@@ -60,12 +70,12 @@ class Tab {
   get panel_element() {
     var panelobj = document.createElement('section');
     panelobj.setAttribute('id', this.panel_id);
-    panelobj.className = this.panel_class;
+    panelobj.classList.add(this.panel_class);
     panelobj.setAttribute('aria-labelledby', this.tab_id);
     panelobj.setAttribute('role', 'tabpanel');
     panelobj.setAttribute('data-tabid', this.id);
     var panelheading = document.createElement('h' + this.panel_heading_level);
-    panelheading.className = this.panel_heading_class;
+    panelheading.classList.add(this.panel_heading_class);
     panelheading.textContent = this.title;
     panelobj.appendChild(panelheading);
     return panelobj;
@@ -83,11 +93,19 @@ class Tab {
         if (!this.all_in_tabbing_order) {
           tabs[i].setAttribute('tabindex', '-1');
         }
+        // Remove the bootstrap active class if requested.
+        if (this.use_bootstrap) {
+          tabs[i].classList.remove('active');
+        }
+
       }
       // select the one that's clicked.
       tab.setAttribute('aria-selected', 'true');
       if (!this.all_in_tabbing_order) {
         tab.setAttribute('tabindex', '0');
+      }
+      if (this.use_bootstrap) {
+        tab.classList.add('active');
       }
 
       // get the current tab panel.
@@ -130,7 +148,8 @@ class TabView {
       expand_tabs: true,
       all_in_tabbing_order: true,
       panel_heading_level: 2,
-      panel_heading_class: undefined
+      panel_heading_class: undefined,
+      use_bootstrap: false
     };
     // Merge the defaults with the provided options
     var options = {
@@ -152,6 +171,7 @@ class TabView {
     this.expand_tabs = options.expand_tabs;
     this.all_in_tabbing_order = options.all_in_tabbing_order;
     this.default_tab = options.default_tab;
+    this.use_bootstrap = options.use_bootstrap;
 
     this.tablist_id = id + '-tablist';
     this.tablist_class = this.class_prefix + '-tablist';
@@ -173,13 +193,15 @@ class TabView {
     var tablist = document.createElement('ul');
     tablist.setAttribute('role', 'tablist');
     tablist.setAttribute('id', this.tablist_id);
-    tablist.className = this.tablist_class;
+    tablist.classList.add(this.tablist_class);
+    // Add the bootstrap classes if requested.
+    if (this.use_bootstrap) {
+      tablist.classList.add('nav', 'nav-tabs');
+    }
     for (var i = 0; i < this.tabs.length; i++) {
-      var child = this.tabs[i].tab_element;
-      if (child.getAttribute('data-tabid') == this.default_tab) {
-        child.setAttribute('aria-selected', 'true');
-      } else {
-        child.setAttribute('aria-selected', 'false');
+      var child = this.tabs[i].get_tab_element(this.tabs[i].id == this.default_tab);
+      if (this.tabs[i].id == this.default_tab) {
+        this.tabs[i].select();
       }
       if (this.expand_tabs) {
         child.style.width = 'calc(98% / ' + this.tabs.length + ')';

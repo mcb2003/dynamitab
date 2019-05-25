@@ -2,11 +2,14 @@
 <html><head>
 <title>Dynamitab Example File</title>
 <link rel="stylesheet" type="text/css" href="dynamitab.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel" src="dynamitab.js"></script>
 <script type="text/babel">
 // create a TabView object.
-var tv = new TabView("tv");
+var tv = new TabView("tv", {
+use_bootstrap: true    
+});
 tv.default_tab = 2;
 // create some tabs.
 var tab1 = new Tab(tv, 1, "Windows", "Articles about Microsoft's Windows operating system.");
