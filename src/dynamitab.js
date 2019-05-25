@@ -85,10 +85,12 @@ class Tab {
     }
     panelobj.setAttribute('role', 'tabpanel');
     panelobj.setAttribute('data-tabid', this.id);
+if(this.panel_heading_level !== 0) {
     var panelheading = document.createElement('h' + this.panel_heading_level);
     panelheading.classList.add(this.panel_heading_class);
     panelheading.textContent = this.title;
     panelobj.appendChild(panelheading);
+}
 
     // If content was provided at the tab's instanciation:
     if (this.content != undefined && this.content instanceof HTMLElement) {
@@ -166,7 +168,7 @@ class TabView {
       default_tab: 1,
       expand_tabs: true,
       all_in_tabbing_order: true,
-      panel_heading_level: 2,
+      panel_heading_level: 0,
       panel_heading_class: undefined,
       use_bootstrap: false,
       bootstrap_fade: true
