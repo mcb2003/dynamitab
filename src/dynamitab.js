@@ -2,10 +2,11 @@
 
 // this is a class definition for a Tab. Tabs can be added to TabView objects.
 class Tab {
-  constructor(tabview, id, title, description = undefined) {
+  constructor(tabview, id, title, description = undefined, content = undefined) {
     this._id = id;
     this.title = title;
     this.description = description;
+    this.content = content;
 
     this.class_prefix = tabview.class_prefix;
     this.all_in_tabbing_order = tabview.all_in_tabbing_order;
@@ -88,6 +89,16 @@ class Tab {
     panelheading.classList.add(this.panel_heading_class);
     panelheading.textContent = this.title;
     panelobj.appendChild(panelheading);
+
+    // If content was provided at the tab's instanciation:
+    if (this.content != undefined && this.content instanceof Element) {
+      panelobj.appendChild(this.content);
+    } else if (this.content != undefined && this.content instanceof Array) {
+      for (i = 0; i < this.content.length; i++) {
+        panelobj.appendChild(this.content[i]);
+      }
+    }
+
     return panelobj;
   }
 
