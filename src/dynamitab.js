@@ -120,15 +120,23 @@ class Tab {
 
 // this is the class definition for TabView objects (the main object used when constructing a TabView).
 class TabView {
-  constructor(id, options = {
-    class_prefix: undefined,
-    default_tab: 1,
-    expand_tabs: true,
-    all_in_tabbing_order: true,
-    panel_heading_level: 2,
-    panel_heading_class: undefined
-  }) {
+  constructor(id, argument_options = {}) {
     this._id = id;
+
+    // These are the default options:
+    var default_options = {
+      class_prefix: undefined,
+      default_tab: 1,
+      expand_tabs: true,
+      all_in_tabbing_order: true,
+      panel_heading_level: 2,
+      panel_heading_class: undefined
+    };
+    // Merge the defaults with the provided options
+    var options = {
+      ...default_options, ...argument_options
+    };
+
     if (options.class_prefix === undefined) {
       this.class_prefix = id;
     } else {
