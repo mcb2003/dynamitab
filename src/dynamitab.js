@@ -12,10 +12,10 @@ class Tab {
     this._tabview_id = tabview.id;
     this.panel_heading_level = tabview.panel_heading_level;
     this.panel_heading_class = tabview.panel_heading_class;
-    this.tab_id = tabview.id + "-tab" + id;
-    this.tab_class = tabview.class_prefix + "-tab";
-    this.panel_id = tabview.id + "-panel" + id;
-    this.panel_class = tabview.class_prefix + "-panel";
+    this.tab_id = tabview.id + '-tab' + id;
+    this.tab_class = tabview.class_prefix + '-tab';
+    this.panel_id = tabview.id + '-panel' + id;
+    this.panel_class = tabview.class_prefix + '-panel';
   }
 
   get id() {
@@ -23,8 +23,8 @@ class Tab {
   }
   set id(value) {
     this._id = value;
-    this.tab_id = this.tabview_id + "-tab" + value;
-    this.panel_id = this.tabview_id + "-panel" + value;
+    this.tab_id = this.tabview_id + '-tab' + value;
+    this.panel_id = this.tabview_id + '-panel' + value;
   }
 
   get tabview_id() {
@@ -32,75 +32,75 @@ class Tab {
   }
   set tabview_id(value) {
     this._tabview_id = value;
-    this.tab_id = value + "-tab" + this.id;
-    this.tab_class = value + "-tab";
-    this.panel_id = value + "-panel" + this.id;
-    this.panel_class = value + "-panel";
+    this.tab_id = value + '-tab' + this.id;
+    this.tab_class = value + '-tab';
+    this.panel_id = value + '-panel' + this.id;
+    this.panel_class = value + '-panel';
   }
 
   get tab_element() {
-    var tabobj = document.createElement("li");
-    tabobj.setAttribute("role", "tab");
-    tabobj.setAttribute("id", this.tab_id);
-    tabobj.setAttribute("class", this.tab_class);
-    tabobj.setAttribute("data-tabid", this.id);
+    var tabobj = document.createElement('li');
+    tabobj.setAttribute('role', 'tab');
+    tabobj.setAttribute('id', this.tab_id);
+    tabobj.setAttribute('class', this.tab_class);
+    tabobj.setAttribute('data-tabid', this.id);
     if (this.all_in_tabbing_order) {
-      tabobj.setAttribute("tabindex", "0");
+      tabobj.setAttribute('tabindex', '0');
     } else {
-      tabobj.setAttribute("tabindex", "-1");
+      tabobj.setAttribute('tabindex', '-1');
     }
-    tabobj.setAttribute("aria-controls", this.panel_id);
+    tabobj.setAttribute('aria-controls', this.panel_id);
     if (this.description != undefined) {
-      tabobj.setAttribute("title", this.description);
+      tabobj.setAttribute('title', this.description);
     }
     tabobj.textContent = this.title;
     return tabobj;
   }
 
   get panel_element() {
-    var panelobj = document.createElement("section");
-    panelobj.setAttribute("id", this.panel_id);
-    panelobj.setAttribute("class", this.panel_class);
-    panelobj.setAttribute("aria-labelledby", this.tab_id);
-    panelobj.setAttribute("role", "tabpanel");
-    panelobj.setAttribute("data-tabid", this.id);
-    var panelheading = document.createElement("h" + this.panel_heading_level);
-    panelheading.setAttribute("class", this.panel_heading_class);
+    var panelobj = document.createElement('section');
+    panelobj.setAttribute('id', this.panel_id);
+    panelobj.setAttribute('class', this.panel_class);
+    panelobj.setAttribute('aria-labelledby', this.tab_id);
+    panelobj.setAttribute('role', 'tabpanel');
+    panelobj.setAttribute('data-tabid', this.id);
+    var panelheading = document.createElement('h' + this.panel_heading_level);
+    panelheading.setAttribute('class', this.panel_heading_class);
     panelheading.textContent = this.title;
     panelobj.appendChild(panelheading);
     return panelobj;
   }
 
   select() {
-    var tab = document.querySelector("#" + this.tab_id);
-    if (tab && tab.getAttribute("aria-selected") != "true") {
+    var tab = document.querySelector('#' + this.tab_id);
+    if (tab && tab.getAttribute('aria-selected') != 'true') {
       // get all tabs.
       var tabs = tab.parentElement.children;
       // deselect them all.
       for (var i = 0; i < tabs.length; i++) {
-        tabs[i].setAttribute("aria-selected", "false");
+        tabs[i].setAttribute('aria-selected', 'false');
         // Also get rid of the tabindex if only the focused tab should have it.
         if (!this.all_in_tabbing_order) {
           tabs[i].setAttribute('tabindex', '-1');
         }
       }
       // select the one that's clicked.
-      tab.setAttribute("aria-selected", "true");
+      tab.setAttribute('aria-selected', 'true');
       if (!this.all_in_tabbing_order) {
         tab.setAttribute('tabindex', '0');
       }
 
       // get the current tab panel.
-      var panelid = tab.getAttribute("aria-controls");
-      var current_panel = document.querySelector("#" + panelid);
+      var panelid = tab.getAttribute('aria-controls');
+      var current_panel = document.querySelector('#' + panelid);
       // from this, get all the panels.
       var panels = current_panel.parentElement.children;
       // hide all panels.
       for (var j = 0; j < panels.length; j++) {
-        panels[j].setAttribute("aria-hidden", "true");
+        panels[j].setAttribute('aria-hidden', 'true');
       }
       // show the correct panel.
-      current_panel.setAttribute("aria-hidden", "false");
+      current_panel.setAttribute('aria-hidden', 'false');
 
       // finally, focus the newly selected tab.
       tab.focus();
@@ -109,8 +109,8 @@ class Tab {
   }
 
   get selected() {
-    var tab = document.querySelector("#" + this.tab_id);
-    if (tab && tab.getAttribute("aria-selected") == "true") {
+    var tab = document.querySelector('#' + this.tab_id);
+    if (tab && tab.getAttribute('aria-selected') == 'true') {
       return true;
     } else {
       return false;
@@ -144,7 +144,7 @@ class TabView {
     }
     this.panel_heading_level = options.panel_heading_level;
     if (options.panel_heading_class === undefined) {
-      this.panel_heading_class = this.class_prefix + "-panelheading";
+      this.panel_heading_class = this.class_prefix + '-panelheading';
     } else {
       this.panel_heading_class = options.panel_heading_class;
     }
@@ -153,8 +153,8 @@ class TabView {
     this.all_in_tabbing_order = options.all_in_tabbing_order;
     this.default_tab = options.default_tab;
 
-    this.tablist_id = id + "-tablist";
-    this.tablist_class = this.class_prefix + "-tablist";
+    this.tablist_id = id + '-tablist';
+    this.tablist_class = this.class_prefix + '-tablist';
   }
 
   get id() {
@@ -170,19 +170,19 @@ class TabView {
   }
 
   get tablist() {
-    var tablist = document.createElement("ul");
-    tablist.setAttribute("role", "tablist");
-    tablist.setAttribute("id", this.tablist_id);
-    tablist.setAttribute("class", this.tablist_class);
+    var tablist = document.createElement('ul');
+    tablist.setAttribute('role', 'tablist');
+    tablist.setAttribute('id', this.tablist_id);
+    tablist.setAttribute('class', this.tablist_class);
     for (var i = 0; i < this.tabs.length; i++) {
       var child = this.tabs[i].tab_element;
-      if (child.getAttribute("data-tabid") == this.default_tab) {
-        child.setAttribute("aria-selected", "true");
+      if (child.getAttribute('data-tabid') == this.default_tab) {
+        child.setAttribute('aria-selected', 'true');
       } else {
-        child.setAttribute("aria-selected", "false");
+        child.setAttribute('aria-selected', 'false');
       }
       if (this.expand_tabs) {
-        child.style.width = "calc(98% / " + this.tabs.length + ")";
+        child.style.width = 'calc(98% / ' + this.tabs.length + ')';
       }
       tablist.appendChild(child);
     }
@@ -190,16 +190,16 @@ class TabView {
   }
 
   get tabview() {
-    var tabview = document.createElement("section");
-    tabview.setAttribute("id", this.id);
+    var tabview = document.createElement('section');
+    tabview.setAttribute('id', this.id);
     tabview.appendChild(this.tablist);
-    var tabpanel_container = document.createElement("div");
+    var tabpanel_container = document.createElement('div');
     for (var i = 0; i < this.tabs.length; i++) {
       var panel = this.tabs[i].panel_element;
-      if (panel.getAttribute("data-tabid") == this.default_tab) {
-        panel.setAttribute("aria-hidden", "false");
+      if (panel.getAttribute('data-tabid') == this.default_tab) {
+        panel.setAttribute('aria-hidden', 'false');
       } else {
-        panel.setAttribute("aria-hidden", "true");
+        panel.setAttribute('aria-hidden', 'true');
       }
       tabpanel_container.appendChild(panel);
     }
@@ -217,18 +217,18 @@ class TabView {
   }
 
   registerEvents() {
-    var tab_elements = document.querySelector("#" + this.tablist_id)
+    var tab_elements = document.querySelector('#' + this.tablist_id)
     tab_elements = tab_elements.children;
     var self = this;
     for (var i = 0; i < tab_elements.length; i++) {
-      tab_elements[i].addEventListener("click", function () {
-        var id = this.getAttribute("data-tabid");
+      tab_elements[i].addEventListener('click', function () {
+        var id = this.getAttribute('data-tabid');
         if (id) {
           var tab = self.getTabById(id);
           tab.select();
         }
       });
-      tab_elements[i].addEventListener("keydown", function (event) {
+      tab_elements[i].addEventListener('keydown', function (event) {
         if (event.which === 13) {
           event.preventDefault();
           this.click();
