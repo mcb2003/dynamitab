@@ -158,3 +158,8 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+# Vim stuff
+*~
+.*.un~
+.*.swp
