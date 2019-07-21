@@ -165,7 +165,7 @@ class TabView {
     // These are the default options:
     var default_options = {
       class_prefix: undefined,
-      default_tab: 1,
+      default_tab: 0,
       expand_tabs: true,
       all_in_tabbing_order: true,
       panel_heading_level: 0,
