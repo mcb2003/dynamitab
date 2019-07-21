@@ -298,7 +298,6 @@ class TabView {
     }
     // select this new tab.
     this.tabs[new_index].select();
-
   }
 
   nextTab() {
@@ -312,7 +311,6 @@ class TabView {
     }
     // select this new tab.
     this.tabs[new_index].select();
-
   }
 
   get currentTab() {
@@ -322,5 +320,10 @@ class TabView {
       }
     }
     return undefined;
+  }
+
+  // A function that creates a new tab element and adds it to the tabview.
+  createTab(title, description = undefined, content = undefined) {
+    this.tabs.push(new Tab(this, this.tabs.length, title, description, content));
   }
 }
