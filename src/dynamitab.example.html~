@@ -1,0 +1,86 @@
+<!doctype html>
+<html><head>
+<title>Dynamitab Example File</title>
+<!-- custom css -->
+<!-- <link rel="stylesheet" type="text/css" href="dynamitab.css"> -->
+<!-- bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel" src="dynamitab.js"></script>
+<script type="text/babel">
+// create a TabView object.
+var tv = new TabView("tv", {
+    panel_heading_level: 2,
+use_bootstrap: true    ,
+expand_tabs: true
+});
+tv.default_tab = 2;
+// create some tabs.
+var tab1 = new Tab(tv, 1, "Windows", "Articles about Microsoft's Windows operating system.", document.querySelector('#tv-panel1-content'));
+var tab2 = new Tab(tv, 2, "macOS", "Articles about Apple's macOS operating system.", document.querySelector('#tv-panel2-content'));
+var tab3 = new Tab(tv, 3, "Linux", "Articles about the free and open source Linux operating system.", document.querySelector('#tv-panel3-content'));
+// add them to the TabView.
+tv.tabs.push(tab1);
+tv.tabs.push(tab2);
+tv.tabs.push(tab3);
+// add the TabView to the body.
+document.body.appendChild(tv.tabview);
+tv.registerEvents();
+</script>
+</head><body>
+    <h1 style="text-align: center;">Example Accessible TabView</h1>
+<div id="tv-panel1-content">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Release Date</th>
+                <td>1985</td>
+            </tr>
+            <tr>
+                <th>Creater</th>
+                <td>Microsoft</td>
+            </tr>
+            <tr>
+                <th>Badness Factor</th>
+                <td>100</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div id="tv-panel2-content">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Release Date</th>
+                <td>1984</td>
+            </tr>
+            <tr>
+                <th>Creater</th>
+                <td>Apple</td>
+            </tr>
+            <tr>
+                <th>Badness Factor</th>
+                <td>50</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div id="tv-panel3-content">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Release Date</th>
+                <td>1991</td>
+            </tr>
+            <tr>
+                <th>Creater</th>
+                <td>Linus Torvalds</td>
+            </tr>
+            <tr>
+                <th>Badness Factor</th>
+                <td>0</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
