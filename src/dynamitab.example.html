@@ -16,13 +16,9 @@ expand_tabs: true
 });
 tv.default_tab = 2;
 // create some tabs.
-var tab1 = new Tab(tv, 1, "Windows", "Info about Microsoft's Windows operating system.", document.querySelector('#tv-panel1-content'));
-var tab2 = new Tab(tv, 2, "macOS", "Info about Apple's macOS operating system.", document.querySelector('#tv-panel2-content'));
-var tab3 = new Tab(tv, 3, "Linux", "Info about the free and open source Linux operating system.", document.querySelector('#tv-panel3-content'));
-// add them to the TabView.
-tv.tabs.push(tab1);
-tv.tabs.push(tab2);
-tv.tabs.push(tab3);
+tv.createTab("Windows", "Info about Microsoft's Windows operating system.", document.querySelector('#tv-panel1-content'));
+tv.createTab("macOS", "Info about Apple's macOS operating system.", document.querySelector('#tv-panel2-content'));
+tv.createTab("Linux", "Info about the free and open source Linux operating system.", document.querySelector('#tv-panel3-content'));
 // add the TabView to the body.
 document.body.appendChild(tv.tabview);
 tv.registerEvents();
