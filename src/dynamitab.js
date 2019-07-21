@@ -325,5 +325,6 @@ class TabView {
   // A function that creates a new tab element and adds it to the tabview.
   createTab(title, description = undefined, content = undefined) {
     this.tabs.push(new Tab(this, this.tabs.length, title, description, content));
+    return this.tabs[this.tabs.length - 1];
   }
 }
