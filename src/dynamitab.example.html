@@ -1,82 +1,103 @@
-<!doctype html>
-<html><head>
-<title>Dynamitab Example File</title>
-<!-- custom css -->
-<!-- <link rel="stylesheet" type="text/css" href="dynamitab.css"> -->
-<!-- bootstrap -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script type="text/babel" src="dynamitab.js"></script>
-<script type="text/babel">
-// create a TabView object.
-var tv = new TabView("tv", {
-    panel_heading_level: 2,
-use_bootstrap: true    ,
-expand_tabs: true
-});
-tv.default_tab = 2;
-// create some tabs.
-tv.createTab("Windows", "Info about Microsoft's Windows operating system.", document.querySelector('#tv-panel1-content'));
-tv.createTab("macOS", "Info about Apple's macOS operating system.", document.querySelector('#tv-panel2-content'));
-tv.createTab("Linux", "Info about the free and open source Linux operating system.", document.querySelector('#tv-panel3-content'));
-// add the TabView to the body.
-document.body.appendChild(tv.tabview);
-tv.registerEvents();
-</script>
-</head><body>
-    <h1 style="text-align: center;">Example Accessible TabView</h1>
-<div id="tv-panel1-content">
-    <table class="table">
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamitab Example File</title>
+    <!-- custom css -->
+    <!-- <link rel="stylesheet" type="text/css" href="dynamitab.css"> -->
+    <!-- bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+    />
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel" src="dynamitab.js"></script>
+    <script type="text/babel">
+      // create a TabView object.
+      var tv = new TabView('tv', {
+        panel_heading_level: 2,
+        use_bootstrap: true,
+        expand_tabs: true,
+      });
+      // Set the default tab (can also be done in constructor options)
+      tv.default_tab = 2;
+      // create some tabs.
+      tv.createTab(
+        'Windows',
+        "Info about Microsoft's Windows operating system.",
+        document.querySelector('#tv-panel1-content'),
+      );
+      tv.createTab(
+        'macOS',
+        "Info about Apple's macOS operating system.",
+        document.querySelector('#tv-panel2-content'),
+      );
+      tv.createTab(
+        'Linux',
+        'Info about the free and open source Linux operating system.',
+        document.querySelector('#tv-panel3-content'),
+      );
+      // add the TabView to its container div in the body.
+      document.querySelector('#tabview-container').appendChild(tv.tabview);
+      // Register the tabview's events (should be called after the document has loaded).
+      tv.registerEvents();
+    </script>
+  </head>
+  <body>
+    <h1 style="text-align: center;">Example Accessible TabView</h1>
+    <div id="tabview-container" />
+    <div id="tv-panel1-content">
+      <table class="table">
         <tbody>
-            <tr>
-                <th>Release Date</th>
-                <td>1985</td>
-            </tr>
-            <tr>
-                <th>Creater</th>
-                <td>Microsoft</td>
-            </tr>
-            <tr>
-                <th>Badness Factor</th>
-                <td>100</td>
-            </tr>
+          <tr>
+            <th>Release Date</th>
+            <td>1985</td>
+          </tr>
+          <tr>
+            <th>Creater</th>
+            <td>Microsoft</td>
+          </tr>
+          <tr>
+            <th>Badness Factor</th>
+            <td>100</td>
+          </tr>
         </tbody>
-    </table>
-</div>
-<div id="tv-panel2-content">
-    <table class="table">
+      </table>
+    </div>
+    <div id="tv-panel2-content">
+      <table class="table">
         <tbody>
-            <tr>
-                <th>Release Date</th>
-                <td>1984</td>
-            </tr>
-            <tr>
-                <th>Creater</th>
-                <td>Apple</td>
-            </tr>
-            <tr>
-                <th>Badness Factor</th>
-                <td>50</td>
-            </tr>
+          <tr>
+            <th>Release Date</th>
+            <td>1984</td>
+          </tr>
+          <tr>
+            <th>Creater</th>
+            <td>Apple</td>
+          </tr>
+          <tr>
+            <th>Badness Factor</th>
+            <td>50</td>
+          </tr>
         </tbody>
-    </table>
-</div>
-<div id="tv-panel3-content">
-    <table class="table">
+      </table>
+    </div>
+    <div id="tv-panel3-content">
+      <table class="table">
         <tbody>
-            <tr>
-                <th>Release Date</th>
-                <td>1991</td>
-            </tr>
-            <tr>
-                <th>Creater</th>
-                <td>Linus Torvalds</td>
-            </tr>
-            <tr>
-                <th>Badness Factor</th>
-                <td>0</td>
-            </tr>
+          <tr>
+            <th>Release Date</th>
+            <td>1991</td>
+          </tr>
+          <tr>
+            <th>Creater</th>
+            <td>Linus Torvalds</td>
+          </tr>
+          <tr>
+            <th>Badness Factor</th>
+            <td>0</td>
+          </tr>
         </tbody>
-    </table>
-</div>
-</body>
+      </table>
+    </div>
+  </body>
+</html>
